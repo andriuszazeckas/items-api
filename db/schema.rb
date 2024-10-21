@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_21_083528) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_21_093828) do
+  create_table "items", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "uuid", limit: 36, null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.string "brand", null: false
+    t.text "photo_url", null: false
+    t.column "status", "enum('0','1')", null: false
+    t.string "user_uuid", limit: 36, null: false
+    t.index ["user_uuid"], name: "fk_items_users"
+    t.index ["uuid"], name: "index_items_on_uuid", unique: true
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "uuid", limit: 36, null: false
     t.string "name", null: false
@@ -19,4 +30,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_21_083528) do
     t.datetime "updated_at", null: false
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
+
+  add_foreign_key "items", "users", column: "user_uuid", primary_key: "uuid", name: "fk_items_users", on_delete: :cascade
 end
