@@ -51,7 +51,7 @@ group :development, :test do
 
   group :development do
     gem 'rubocop', '>= 1.49.0', require: false
-    gem 'vinted-rubocop', require: false, source: private_gem_source
+    gem 'vinted-rubocop', '>= 1.6.0', require: false, source: private_gem_source
   end
 end
 
