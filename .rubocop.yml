@@ -8,8 +8,8 @@
 #   Enabled: false
 
 inherit_gem:
-  rubocop-vinted:
-    - .rubocop.default.yml
+  vinted-rubocop:
+    - .rubocop.yml
 
 AllCops:
   TargetRubyVersion: 3.3.0
