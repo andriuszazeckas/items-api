@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_21_093828) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_21_104056) do
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "uuid", limit: 36, null: false
-    t.decimal "price", precision: 10, scale: 2, null: false
+    t.decimal "price", precision: 2, null: false
     t.string "brand", null: false
     t.text "photo_url", null: false
-    t.column "status", "enum('0','1')", null: false
-    t.string "user_uuid", limit: 36, null: false
-    t.index ["user_uuid"], name: "fk_items_users"
+    t.boolean "status", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "fk_items_users"
     t.index ["uuid"], name: "index_items_on_uuid", unique: true
   end
 
@@ -31,5 +33,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_21_093828) do
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
-  add_foreign_key "items", "users", column: "user_uuid", primary_key: "uuid", name: "fk_items_users", on_delete: :cascade
+  add_foreign_key "items", "users", name: "fk_items_users", on_delete: :cascade
 end
