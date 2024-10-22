@@ -17,17 +17,13 @@ class ItemsController < ApplicationController
   end
 
   def index
-    filtered_items = Items::Filter.for(params[:brand], params[:status])
+    filtered_items = Items::Filter.for(params[:brand], params[:status]).page(params[:page]).per(2)
 
-    # filtered_items = Item.all do |item|
-    #   item.where(brand: params[:brand]) if params[:brand]
-    #   item.where(status: params[:status]) if params[:status]
-    #   item
-    # end
+    items_output(filtered_items)
 
-    render json: {
-      items: filtered_items.map { |item| { brand: item.brand, status: item.status } },
-    }
+    # render json: {
+    #   items: filtered_items.map { |item| { id: item.id, brand: item.brand, status: item.status } },
+    # }
   end
 
   # def index
