@@ -19,9 +19,9 @@ class ItemsController < ApplicationController
   def index
     filtered_items = Items::Filter.for(params[:brand], params[:status])
     per_page = 2
-    pagination = filtered_items.page(params[:page]).per(per_page)
+    paginate_items = filtered_items.page(params[:page]).per(per_page)
 
-    items_output(pagination)
+    items_output(paginate_items)
 
     # render json: {
     #   items: filtered_items.map { |item| { id: item.id, brand: item.brand, status: item.status } },
