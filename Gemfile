@@ -4,8 +4,7 @@ private_gem_source = 'https://nexus.vinted.net/repository/rubygems-cloudsmith-re
 gem 'interactor-initializer' # to be used for writing interactors
 gem 'active_model_serializers' # for object serialization
 
-
-
+gem 'kaminari'
 
 # ORIGINAL FILE CONTENT:
 # source "https://rubygems.org"
