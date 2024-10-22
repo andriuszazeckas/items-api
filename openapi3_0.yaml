@@ -1,0 +1,187 @@
+openapi: 3.0.0
+info:
+  title: Item API
+  description: API for managing items
+  version: 1.0.0
+
+paths:
+  /items:
+    get:
+      summary: Retrieve a list of items
+      description: Returns a list of item details
+      responses:
+        '200':
+          description: List of item details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+
+    post:
+      summary: Create a new item
+      description: Creates a new item and returns its details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemCreate'
+      responses:
+        '201':
+          description: Item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '422':
+          description: Invalid request
+
+  /items/{uuid}:
+    get:
+      summary: Retrieve an item by UUID
+      description: Returns the item details
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Item details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: Item not found
+
+    put:
+      summary: Update an existing item
+      description: Updates an existing item and returns its details
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemUpdate'
+      responses:
+        '200':
+          description: Item updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '422':
+          description: Invalid request
+
+    delete:
+      summary: Delete an item
+      description: Deletes an item and returns a success message
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Item deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /users/{uuid}:
+    get:
+      summary: Retrieve a user by UUID
+      description: Returns the user details
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        price:
+          type: number
+        brand:
+          type: string
+        photo_url:
+          type: string
+        status:
+          type: string
+        user_uuid:
+          type: string
+          format: uuid
+
+    ItemCreate:
+      type: object
+      properties:
+        price:
+          type: number
+        brand:
+          type: string
+        photo_url:
+          type: string
+        status:
+          type: string
+        user_id:
+          type: integer
+
+    ItemUpdate:
+      type: object
+      properties:
+        price:
+          type: number
+        brand:
+          type: string
+        photo_url:
+          type: string
+        status:
+          type: string
+        user_id:
+          type: integer
+
+    User:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
